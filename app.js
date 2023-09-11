@@ -61,13 +61,16 @@ function createDivsForColors(colorArray) {
 
 
 // we need to track the divs somehow - dataset?
-// setAttribute data-location
+// setAttribute data-location?
+// something with the shuffledColors array?
 
 let colorsInPlay = [];
 
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
-  console.log("you just clicked", event.target);
+  // console.log("you just clicked", event.target);
+
+  
 
   event.target.style.backgroundColor = event.target.className;
 

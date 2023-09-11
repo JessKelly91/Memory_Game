@@ -64,31 +64,46 @@ function createDivsForColors(colorArray) {
 // setAttribute data-location?
 // something with the shuffledColors array?
 
-let colorsInPlay = [];
+// let colorsInPlay = [];
+let activeTile = null;
+let awaitingEndOfMove = false;
 
 function handleCardClick(event) {
-  // you can use event.target to see which element was clicked
-  // console.log("you just clicked", event.target);
 
-  
+
+  if(awaitingEndOfMove){
+    return;
+  }
 
   event.target.style.backgroundColor = event.target.className;
 
-  colorsInPlay.push(event.target.className);
+  if(!activeTile){
+    activeTile = event.target;
+    return
+  }
 
-  if(colorsInPlay.length === 2){
-    if(colorsInPlay[0] === colorsInPlay[1]){
-      colorsInPlay = [];
-    }
-    else if (colorsInPlay[0] !== colorsInPlay[1]){
-      setTimeout(function(){
-        event.target.style.backgroundColor = "white";
-      }, 1000);
-      colorsInPlay = [];
-      //first flipped card to white
-      // data-location of cardsInPlay[0] to white....
+  if(activeTile){
+    if(activeTile.className === event.target.className){
+      awaitingEndOfMove = false;
+      activeTile = null;
+
+      //update score here
+      //if-else logic to see if game is complete
+
+      return;
     }
   }
+
+
+  awaitingEndOfMove = true;
+
+  setTimeout(function(){
+    event.target.style.backgroundColor = null;
+    activeTile.style.backgroundColor = null;
+
+    awaitingEndOfMove = false;
+    activeTile = null;
+  }, 1000);
 
 }
 

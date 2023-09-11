@@ -48,6 +48,7 @@ function createDivsForColors(colorArray) {
 
     // give it a class attribute for the value we are looping over
     newDiv.classList.add(color);
+    newDiv.setAttribute("data-revealed", "false")
 
     // call a function handleCardClick when a div is clicked on
     newDiv.addEventListener("click", handleCardClick);
@@ -70,8 +71,9 @@ let awaitingEndOfMove = false;
 
 function handleCardClick(event) {
 
+  let revealed = event.target.getAttribute("data-revealed");
 
-  if(awaitingEndOfMove){
+  if(awaitingEndOfMove || revealed === "true" || event.target === activeTile){
     return;
   }
 
@@ -84,6 +86,9 @@ function handleCardClick(event) {
 
   if(activeTile){
     if(activeTile.className === event.target.className){
+      activeTile.setAttribute("data-revealed", "true");
+      event.target.setAttribute("data-revealed", "true");
+
       awaitingEndOfMove = false;
       activeTile = null;
 
@@ -104,6 +109,8 @@ function handleCardClick(event) {
     awaitingEndOfMove = false;
     activeTile = null;
   }, 1000);
+
+  //removeEventListener when all tiles are flipped
 
 }
 
